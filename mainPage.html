@@ -11,34 +11,73 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <title>AppCenter</title>
+    <script src="AddApp.js"></script>
     <script src="main.js"></script>
     <script src="applications.js"></script>
+    
 </head>
 
 <body>
-    <h1>Hello, world!</h1>
     <div class="container">
         <img src="images/AppsCenter.png" alt="" onerror="this.src='images/Help.png'">
-        <form class="form-inline">
-            <input id="searchBar" onkeyup="searchApp()" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button id="addApp" class="btn btn-outline-success my-2 my-sm-0" >+ Publish new App</button>
-        </form>
-        <p></p>
-        <div id="appsContainer">
-            <div class="card">
-                <div class="row">
-                    <div class = "col-3">
-                        <img style="width: 150px; height: 150px" class="img-thumbnail" src="images/1/facebook.png" alt="">
-                    </div>
-                    <div  class = "col-5">
-                        <h3>AppName</h3>
-                        <p>description</p>
-                        <p>company</p>
-                        <p><b>Price:90$</b></p>
-                    </div>
+        <div class="row">
+            <div class=""col-lg-3></div>
+            <div class=""col-lg-8>
+                <form class="form-inline">
+                    <input  style="width: 500px" id="searchBar" onkeyup="searchApp()" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <a data-toggle="modal" data-target="#addAppModal" id="addApp" class="btn btn-outline-success my-2 my-sm-0" >+ Publish new App</a>
+                </form>
+                <p></p>
+                <div id="appsContainer">
+
                 </div>
+
+                <div class="modal fade" id="addAppModal" tabindex="-1" aria-labelledby="addApp" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Add new Application</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="needs-validation" id="tForm" novalidate>
+                                <div class="mb-3 mt-3">
+                                  <label class="form-label">App Name</label>
+                                  <input onkeyup="validateName()" type="text" class="form-control is-invalid" id="nameInput"
+                                    placeholder="Enter App name" maxlength="30" required>
+                                  <div class="valid-feedback">Valid.</div>
+                                  <div class="invalid-feedback">Please fill out this field. (1-30 characters) letters and numbers only</div>
+                                </div>
+                                <div class="mb-3 mt-3">
+                                  <label>App price</label>
+                                  <input type="number" min="0" class="form-control" id="priceInput" value="0" placeholder="App price in $"
+                                    required>
+                                </div>
+                                <div class="mb-3 mt-3">
+                                  <label>App description</label>
+                                  <textarea class="form-control" id="descInput" rows="3" placeholder="App description"
+                                    maxlength="500"></textarea>
+                                </div>
+                                <div class="mb-3 mt-3">
+                                  <label>Company name</label>
+                                  <input type="text" class="form-control" id="companyInput" placeholder="Company name" maxlength="30">
+                                </div>
+                                <div class="mb-3 mt-3">
+                                  <label>Image url</label>
+                                  <input type="text" class="form-control" id="imgInput" maxlength="300">
+                                </div>
+                                <button id="submit" type="submit" class="btn btn-outline-success my-2 my-sm-0">publish application</button>
+                              </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
             </div>
         </div>
+        
     </div>
 
     <!-- Optional JavaScript -->

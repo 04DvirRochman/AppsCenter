@@ -14,27 +14,22 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 window.onload = () => {
-    let submit = document.querySelector('#submit');
-    submit.addEventListener('click',event=>submitForm(event));
-    
+    let form = document.querySelector('.needs-validation');
+    form.addEventListener('submit',event=> submitForm(event));
 }
+
 
 function submitForm(event) {
     event.preventDefault();
-    let tForm = document.querySelector('#tForm')
+    let forms = [...document.querySelectorAll('.form-control')];
     let app = getAppFromForm();
 
-    if(validateApp(app)){
-        addApp(app);
+    if(!forms.every(form=>!form.classList.contains('is-invalid')))
+    {
+        event.stopPropagation();
+        return;
     }
-    else{
-        tForm.classList.remove('was-validated');
-    }
-    
 
-  }
-
-  function addApp(app){
     app.id = getNextId();
     addItemToTheList(app);
     window.location.href='./mainPage.html';
@@ -52,25 +47,38 @@ function submitForm(event) {
     return newApp;
   }
 
-  function validateApp(app){
-    let invalid = new RegExp("/[^\w]/");
-
-    if(invalid.test(app.name)){
-        console.log("hi");
-        return false;
-    }
-    if(app.name.length < 4 || app.name.length > 30){
-        return false;
-    }
-    if(app.price < 0){
-        return false;
-    }
-    if(app.desc.length >500)
-    {
-        return false;
-    }
-    if(app.companyName.length >30){
+  function validateLength(element,minLength,maxLength){
+    if(element.value.length > maxLength || element.value.length < minLength){
         return false;
     }
     return true;
+  }
+
+  function validateLettersAndNumbers(element){
+    let invalid = new RegExp("[^A-Z^a-z^0-9\\s]","g");
+    if(invalid.test(element.value)){
+        return false;
+    }
+    return true;
+  }
+
+  function validateName(){
+    let inputField = document.querySelector('#nameInput');
+    if(!validateLength(inputField,4,30) || !validateLettersAndNumbers(inputField)){
+        console.log("hi");
+        if(inputField.classList.contains('is-valid')){
+            inputField.classList.replace('is-valid', 'is-invalid');
+        }
+        else{
+            inputField.classList.add('is-invalid');
+        }
+    }
+    else{
+        if(inputField.classList.contains('is-invalid')){
+            inputField.classList.replace('is-invalid', 'is-valid');
+        }
+        else{
+            inputField.classList.add('is-valid');
+        }
+    }
   }
