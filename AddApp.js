@@ -1,5 +1,18 @@
+
 const addItemToTheList = (data) => {
     localStorage.setItem('applications', JSON.stringify(JSON.parse(localStorage.getItem('applications')).concat(data)));
+    let audio = new Audio('./sound.mp3');
+    audio.play();
+    refreshApps();
+}
+
+const removeItemFromTheList = (id) => {
+    localStorage.setItem('applications', JSON.stringify(JSON.parse(localStorage.getItem('applications')).filter(item=>item['id'] != id)));
+    localStorage.setItem('id', --id);
+    let audio = new Audio('./sound.mp3');
+    audio.play();
+    refreshApps();
+    
 }
 
 const getNextId = () => {
@@ -9,14 +22,12 @@ const getNextId = () => {
     return id;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-		
-});
 
-window.onload = () => {
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("bodek");
     let form = document.querySelector('.needs-validation');
     form.addEventListener('submit',event=> submitForm(event));
-}
+});
 
 
 function submitForm(event) {
@@ -32,7 +43,7 @@ function submitForm(event) {
 
     app.id = getNextId();
     addItemToTheList(app);
-    window.location.href='./mainPage.html';
+    $('#addAppModal').modal('hide');
   }
 
   function getAppFromForm(){

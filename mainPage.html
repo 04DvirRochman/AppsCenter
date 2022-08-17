@@ -18,15 +18,16 @@
 </head>
 
 <body>
-    <div class="container">
-        <img src="images/AppsCenter.png" alt="" onerror="this.src='images/Help.png'">
-        <div class="row">
-            <div class=""col-lg-3></div>
-            <div class=""col-lg-8>
-                <form class="form-inline">
-                    <input  style="width: 500px" id="searchBar" onkeyup="searchApp()" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <a data-toggle="modal" data-target="#addAppModal" id="addApp" class="btn btn-outline-success my-2 my-sm-0" >+ Publish new App</a>
-                </form>
+    <div class="container " style="margin: auto">
+        
+        <div class="row align-items-center d-flex justify-content-center">
+          <img src="images/AppsCenter.png" alt="" onerror="this.src='images/Help.png'">
+          <form class="form-inline">
+            <input  style="width: 500px" id="searchBar" onkeyup="searchApp()" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <a data-toggle="modal" data-target="#addAppModal" id="addApp" class="btn btn-outline-success my-2 my-sm-0" >+ Publish new App</a>
+        </form>
+            <div class="col-lg-8">
+                
                 <p></p>
                 <div id="appsContainer">
 
@@ -37,7 +38,6 @@
                       <div class="modal-content">
                         <div class="modal-header">
                           <h5 class="modal-title" id="exampleModalLabel">Add new Application</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <form class="needs-validation" id="tForm" novalidate>
