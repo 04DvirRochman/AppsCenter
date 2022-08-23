@@ -13,9 +13,8 @@ function validateLength(element,minLength,maxLength){
     return true;
   }
 
-  export function validateName(element) {
+  function validateName(element) {
     if (!validateLength(element, 4, 30) || !validateLettersAndNumbers(element)) {
-        console.log("hi");
         if (element.classList.contains('is-valid')) {
             element.classList.replace('is-valid', 'is-invalid');
         }
@@ -32,3 +31,5 @@ function validateLength(element,minLength,maxLength){
         }
     }
 }
+
+//export {validateName};

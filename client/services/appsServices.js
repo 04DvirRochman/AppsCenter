@@ -1,3 +1,115 @@
+
+async function getAllApps(){
+    let raw = "";
+
+	let requestOptions = {
+		method: 'GET',
+		redirect: 'follow',
+	};
+
+	try {
+		const response = await fetch("http://localhost:4000/api/apps", requestOptions);
+		const result = await response.json();
+		return result;
+	}
+	catch (e) {
+		console.log('error', e.message);
+	}
+}
+
+async function getApp(id){
+    let raw = "";
+
+	let requestOptions = {
+		method: 'GET',
+		redirect: 'follow',
+	};
+
+	try {
+		const response = await fetch(`http://localhost:4000/api/apps/${id}`, requestOptions);
+		const result = await response.json();
+		return result;
+	}
+	catch (e) {
+		console.log('error', e.message);
+	}
+}
+
+async function editApp(app){
+    let raw = JSON.stringify(app);
+
+	let requestOptions = {
+		method: 'PUT',
+		headers: { 'Content-Type': 'application/json' },
+		body: raw,
+		redirect: 'follow'
+	};
+
+	try {
+		const response = await fetch(`http://localhost:4000/api/apps/`, requestOptions);
+		console.log(response);
+        return response;
+	}
+	catch (e) {
+		alert('error', e);
+	}
+}
+
+async function addApp(app){
+    let raw = JSON.stringify(app);
+
+	let requestOptions = {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: raw,
+		redirect: 'follow'
+	};
+
+	try {
+		const response = await fetch("http://localhost:4000/api/apps", requestOptions);
+		console.log(response);
+        return response;
+	}
+	catch (e) {
+		alert('error', e);
+	}
+}
+
+async function removeApp(id) {
+    let requestOptions = {
+		method: 'DELETE',
+		redirect: 'follow'
+	};
+
+	try{
+		let res = await fetch(`http://localhost:4000/api/apps/${id}`, requestOptions);
+		console.log(res);
+	}
+	catch(e){
+		console.log(e);
+		alert(e);
+	}
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    
+});
+
+async function createTable(){
+    try{
+        query(`CREATE TABLE appcenter.applications(id int, imageUrl varchar(255), name varchar(255), price float, description varchar(255), companyName  varchar(255),createdAt time);`);
+    }
+    catch(e)
+    {
+        console.log(e);
+    }
+}
+
+//export{createTable,removeApp,addApp,getAllApps};
+
+
+
+
 let id = 6;
 
 let applications = [
@@ -50,38 +162,3 @@ let applications = [
           'companyName': "KahMonit (C)"
       }
   ];
-
-  
-  export const getNextId = () => {
-    let id = localStorage.getItem('id');
-    localStorage.setItem('id', ++id);
-    
-    return id;
-}
-
-
-export function getData() {
-    if (localStorage.getItem('applications') == null) {
-        localStorage.setItem('applications', JSON.stringify(applications));
-        localStorage.setItem('id', id);
-    }
-
-    return JSON.parse(localStorage.getItem('applications'));
-}
-
-export async function getAllApps(){
-    return JSON.parse(localStorage.getItem('applications'));
-}
-
-export async function addApp(data){
-    localStorage.setItem('applications', JSON.stringify(JSON.parse(localStorage.getItem('applications')).concat(data)));
-}
-
-export async function removeApp(id) {
-    localStorage.setItem('applications', JSON.stringify(JSON.parse(localStorage.getItem('applications')).filter(item=>item['id'] != id)));
-    localStorage.setItem('id', --id);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    
-});

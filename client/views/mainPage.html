@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 
-<head>
+<head >
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,8 +22,7 @@
       <form class="form-inline">
         <input oninput="searchApp()" style="width: 500px" id="searchBar" onkeyup="searchApp()" class="form-control mr-sm-2" type="search"
           placeholder="Search" aria-label="Search">
-        <a data-toggle="modal" data-target="#addAppModal" id="addApp" class="btn btn-outline-success my-2 my-sm-0">+
-          Publish new App</a>
+        <a onclick="onClickAddApp()" data-toggle="modal" data-target="#addAppModal" id="addApp" class="btn btn-outline-success my-2 my-sm-0">+Publish new App</a>
       </form>
       <div class="col-lg-8">
 
@@ -39,7 +38,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Add new Application</h5>
               </div>
               <div class="modal-body">
-                <form onsubmit="submitForm(event)" class="needs-validation" id="tForm" novalidate>
+                <form class="needs-validation" id="tForm" novalidate>
                   <div class="mb-3 mt-3">
                     <label class="form-label">App Name</label>
                     <input oninput="nameFieldOnInputChange(event)" type="text" class="form-control is-invalid" id="nameInput"
@@ -66,8 +65,7 @@
                     <label>Image url</label>
                     <input type="text" class="form-control" id="imgInput" maxlength="300">
                   </div>
-                  <button id="submit" type="submit" class="btn btn-outline-success my-2 my-sm-0">publish
-                    application</button>
+                  <button onclick="submitFormAddApp(event)" id="submit" type="submit" class="btn btn-outline-success my-2 my-sm-0">publish application</button>
                 </form>
               </div>
               <div class="modal-footer">
@@ -93,8 +91,9 @@
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
 
-  <script type ="module" src="../controllers/main.js"></script>
-  <script src="../applications.js"></script>
+  <script src="../controllers/main.js"></script>
+  <script src="../services/appsServices.js"></script>
+  <script src="../controllers/validations.js"></script>
 </body>
 
 </html>
