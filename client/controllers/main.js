@@ -1,19 +1,10 @@
-
-
-//import {getAllApps,removeApp, addApp} from "../services/appsServices.js";
-//import {validateName} from "./validations.js";
-
 let allApps;
 
 window.onload = () => {
-    //localStorage.clear();
-    //getData();
     start();
-    //document.querySelector('#addApp').addEventListener('click',event=>changePage(event));
 }
 
-async function start()
-{
+async function start() {
     allApps = await getAllApps();
     await refreshApps();
 }
@@ -35,12 +26,10 @@ function generateAppHTML(app) {
     if (app.companyname === '') {
         app.companyname = "this app does not have company";
     }
-    if(app.imageurl === '')
-    {
+    if (app.imageurl === '') {
         app.imageurl = '../images/Help.png';
     }
-    else
-    {
+    else {
         app.imageurl = `../images/${app.imageurl}`;
     }
 
@@ -71,28 +60,30 @@ function generateAppHTML(app) {
     `;
 }
 
-window.onClickRemove = async (id)=>{
-    removeApp(id).then(()=>{
+window.onClickRemove = async (id) => {
+    removeApp(id).then(() => {
         let audio = new Audio('../sound.mp3');
-    audio.play();
-    refreshApps();
+        audio.play();
+        refreshApps();
     });
 }
 
-window.searchApp = async ()=> {
+window.searchApp = async () => {
     let appsContainer = document.querySelector('#appsContainer');
-    appsContainer.innerHTML = null;
-    let searchBar = document.querySelector('#searchBar');
-    let filter = searchBar.value.toUpperCase();
-    //let filteredApps = await getAllApps();
-    filteredApps = allApps.filter(app => app.name.toUpperCase().indexOf(filter) > -1);
+    let searchBarValue = document.querySelector('#searchBar').value;
+    let filteredApps;
+    if (searchBarValue == '') {
+        filteredApps = allApps;
+    }
+    else {
+        filteredApps = await getFilteredApps(searchBarValue);
+    }
     let appsHTML = "";
     filteredApps.map(app => appsHTML += generateAppHTML(app));
-
     appsContainer.innerHTML = appsHTML;
 }
 
-window.submitFormAddApp = async (event)=> {
+window.submitFormAddApp = async (event) => {
     event.preventDefault();
     let forms = [...document.querySelectorAll('.form-control')];
     let app = getAppFromForm();
@@ -109,7 +100,7 @@ window.submitFormAddApp = async (event)=> {
     $('#addAppModal').modal('hide');
 }
 
-window.submitFormEditApp = async (event,id)=> {
+window.submitFormEditApp = async (event, id) => {
     event.preventDefault();
     let forms = [...document.querySelectorAll('.form-control')];
     let app = getAppFromForm();
@@ -127,7 +118,7 @@ window.submitFormEditApp = async (event,id)=> {
     $('#addAppModal').modal('hide');
 }
 
-window.onClickEdit = async (id)=>{
+window.onClickEdit = async (id) => {
     changeModalHeader("Edit Application");
     let app = await getApp(id);
     document.querySelector('#imgInput').value = app.imageurl;
@@ -138,10 +129,10 @@ window.onClickEdit = async (id)=>{
     validateName(document.querySelector('#nameInput'));
     const submitButton = document.querySelector('#submit');
     submitButton.textContent = 'Edit Application';
-    submitButton.setAttribute('onclick',`submitFormEditApp(event,${app.id})`);
+    submitButton.setAttribute('onclick', `submitFormEditApp(event,${app.id})`);
 }
 
-window.onClickAddApp = async ()=>{
+window.onClickAddApp = async () => {
     changeModalHeader("Add Application");
     document.querySelector('#imgInput').value = '';
     document.querySelector('#nameInput').value = '';
@@ -151,26 +142,26 @@ window.onClickAddApp = async ()=>{
     validateName(document.querySelector('#nameInput'));
     const submitButton = document.querySelector('#submit');
     submitButton.textContent = 'Publish Application';
-    submitButton.setAttribute('onclick',`submitFormAddApp(event)`);
+    submitButton.setAttribute('onclick', `submitFormAddApp(event)`);
 }
 
-function changeModalHeader(newHeader){
+function changeModalHeader(newHeader) {
     const modal = document.querySelector('#addAppModal');
     modal.querySelector('.modal-header').textContent = newHeader;
 }
 
 
-function getAppFromForm(){
+function getAppFromForm() {
     let newApp = {
-    'imageUrl': document.querySelector('#imgInput').value,
-    'name' : document.querySelector('#nameInput').value,
-    'price' : document.querySelector('#priceInput').value,
-    'desc' : document.querySelector('#descInput').value,
-    'companyName' : document.querySelector('#companyInput').value
+        'imageUrl': document.querySelector('#imgInput').value,
+        'name': document.querySelector('#nameInput').value,
+        'price': document.querySelector('#priceInput').value,
+        'desc': document.querySelector('#descInput').value,
+        'companyName': document.querySelector('#companyInput').value
     }
     return newApp;
-  }
+}
 
-window.nameFieldOnInputChange = (event)=>{
+window.nameFieldOnInputChange = (event) => {
     validateName(event.target);
 }

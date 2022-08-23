@@ -1,11 +1,10 @@
 <!doctype html>
 <html lang="en">
 
-<head >
+<head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -20,9 +19,10 @@
     <div class="row align-items-center d-flex justify-content-center">
       <img src="../images/AppsCenter.png" alt="" onerror="this.src='../images/Help.png'">
       <form class="form-inline">
-        <input oninput="searchApp()" style="width: 500px" id="searchBar" onkeyup="searchApp()" class="form-control mr-sm-2" type="search"
-          placeholder="Search" aria-label="Search">
-        <a onclick="onClickAddApp()" data-toggle="modal" data-target="#addAppModal" id="addApp" class="btn btn-outline-success my-2 my-sm-0">+Publish new App</a>
+        <input oninput="searchApp()" style="width: 500px" id="searchBar" onkeyup="searchApp()"
+          class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <a onclick="onClickAddApp()" data-toggle="modal" data-target="#addAppModal" id="addApp"
+          class="btn btn-outline-success my-2 my-sm-0">+Publish new App</a>
       </form>
       <div class="col-lg-8">
 
@@ -41,8 +41,8 @@
                 <form class="needs-validation" id="tForm" novalidate>
                   <div class="mb-3 mt-3">
                     <label class="form-label">App Name</label>
-                    <input oninput="nameFieldOnInputChange(event)" type="text" class="form-control is-invalid" id="nameInput"
-                      placeholder="Enter App name" maxlength="30" required>
+                    <input oninput="nameFieldOnInputChange(event)" type="text" class="form-control is-invalid"
+                      id="nameInput" placeholder="Enter App name" maxlength="30" required>
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field. (1-30 characters) letters and numbers only
                     </div>
@@ -65,7 +65,8 @@
                     <label>Image url</label>
                     <input type="text" class="form-control" id="imgInput" maxlength="300">
                   </div>
-                  <button onclick="submitFormAddApp(event)" id="submit" type="submit" class="btn btn-outline-success my-2 my-sm-0">publish application</button>
+                  <button onclick="submitFormAddApp(event)" id="submit" type="submit"
+                    class="btn btn-outline-success my-2 my-sm-0">publish application</button>
                 </form>
               </div>
               <div class="modal-footer">

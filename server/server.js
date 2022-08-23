@@ -26,6 +26,11 @@ app.get("/api/apps", async (req, res) => {
     res.send(toSend);
 });
 
+app.get("/api/search/:name", async (req, res) => {
+    let toSend = await dataBase.searchByName(req.params.name);
+    res.send(toSend);
+});
+
 app.get('/api/apps/:id', async (req, res) => {
     const app = await dataBase.getById(req.params.id);
     if (!app) {

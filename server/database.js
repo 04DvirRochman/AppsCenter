@@ -82,7 +82,6 @@ function createNewPool() {
 }
 
 const pool = createNewPool();
-//getStarters();
 
 onStart();
 
@@ -97,7 +96,7 @@ async function getStarters() {
     }
 }
 
-async function isTableExists(){
+async function isTableExists() {
     let ret = false;
     try {
         await pool.query('SELECT * FROM tlv_parkings.parkings');
@@ -111,13 +110,13 @@ async function isTableExists(){
     }
 }
 
-async function onStart(){
+async function onStart() {
     let needTable = await !isTableExists();
-    if(needTable){
+    if (needTable) {
         await createTable();
     }
     let needStarters = await getAll();
-    if(needStarters.length == 0){
+    if (needStarters.length == 0) {
         await getStarters();
     }
 }
@@ -130,7 +129,7 @@ async function createTable() {
         console.log("table created");
     }
     catch (e) {
-        console.log(e);
+        console.log(e.message);
     }
 
 }
@@ -141,11 +140,11 @@ async function getAll() {
     console.log("getting all...");
     try {
         const data = await pool.query('SELECT * FROM appcenter.applications');
-        console.log(`got ${data.rows}`);
+        console.log(`got ${data.rows.length} items`);
         return data.rows;
     }
     catch (e) {
-        console.log(e);
+        console.log(e.message);
         return e.message;
     }
 }
@@ -156,7 +155,7 @@ async function getById(id) {
         return data.rows[0];
     }
     catch (e) {
-        console.log(e);
+        console.log(e.message);
         return e.message;
     }
 }
@@ -167,7 +166,7 @@ async function deleteById(id) {
         return data.rows[0];
     }
     catch (e) {
-        console.log(e);
+        console.log(e.message);
         return e.message;
     }
 }
@@ -178,7 +177,7 @@ async function clear() {
         return data.rows[0];
     }
     catch (e) {
-        console.log(e);
+        console.log(e.message);
         return e.message;
     }
 }
@@ -186,13 +185,13 @@ async function clear() {
 async function add(app) {
     app['id'] = Math.floor(Math.random() * 1000000);
     var today = new Date();
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     try {
-        let data = await pool.query('INSERT INTO  appcenter.applications VALUES ($1, $2, $3, $4, $5, $6,$7);', [app['id'], app['imageUrl'], app['name'], app['price'], app['desc'], app['companyName'],date]);
+        let data = await pool.query('INSERT INTO  appcenter.applications VALUES ($1, $2, $3, $4, $5, $6,$7);', [app['id'], app['imageUrl'], app['name'], app['price'], app['desc'], app['companyName'], date]);
         return data;
     }
     catch (e) {
-        console.log(e);
+        console.log(e.message);
         return e.message;
     }
 }
@@ -203,10 +202,23 @@ async function edit(app) {
         return data;
     }
     catch (e) {
-        console.log(e);
+        console.log(e.message);
+        return e.message;
+    }
+}
+
+async function searchByName(name) {
+    console.log(`getting all results with '${name}'...`);
+    try {
+        const data = await pool.query(`SELECT * FROM appcenter.applications WHERE UPPER(name) LIKE UPPER('%${name}%') LIMIT 1000;`);
+        console.log(`got ${data.rows.length} items`);
+        return data.rows;
+    }
+    catch (e) {
+        console.log(e.message);
         return e.message;
     }
 }
 
 
-module.exports = { getAll,edit, getById, deleteById, add, clear };
+module.exports = { searchByName, getAll, edit, getById, deleteById, add, clear };
