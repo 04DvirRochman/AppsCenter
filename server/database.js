@@ -137,10 +137,8 @@ async function createTable() {
 
 
 async function getAll() {
-    console.log("getting all...");
     try {
         const data = await pool.query('SELECT * FROM appcenter.applications');
-        console.log(`got ${data.rows.length} items`);
         return data.rows;
     }
     catch (e) {
@@ -208,10 +206,8 @@ async function edit(app) {
 }
 
 async function searchByName(name) {
-    console.log(`getting all results with '${name}'...`);
     try {
         const data = await pool.query(`SELECT * FROM appcenter.applications WHERE UPPER(name) LIKE UPPER('%${name}%') LIMIT 1000;`);
-        console.log(`got ${data.rows.length} items`);
         return data.rows;
     }
     catch (e) {
