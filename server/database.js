@@ -131,7 +131,6 @@ async function createTable() {
     catch (e) {
         console.log(e.message);
     }
-
 }
 
 
@@ -183,9 +182,8 @@ async function clear() {
 async function add(app) {
     app['id'] = Math.floor(Math.random() * 1000000);
     var today = new Date();
-    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     try {
-        let data = await pool.query('INSERT INTO  appcenter.applications VALUES ($1, $2, $3, $4, $5, $6,$7);', [app['id'], app['imageUrl'], app['name'], app['price'], app['desc'], app['companyName'], date]);
+        let data = await pool.query('INSERT INTO  appcenter.applications VALUES ($1, $2, $3, $4, $5, $6,$7);', [app['id'], app['imageUrl'], app['name'], app['price'], app['desc'], app['companyName'], today]);
         return data;
     }
     catch (e) {

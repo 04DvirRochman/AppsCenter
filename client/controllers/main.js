@@ -33,11 +33,14 @@ function generateAppHTML(app) {
         app.imageurl = `../images/${app.imageurl}`;
     }
 
+    app.createdat = new Date(app.createdat);
+    var date = app.createdat.getFullYear() + '-' + (app.createdat.getMonth() + 1) + '-' + app.createdat.getDate();
+
 
     return `
     <div class="card" >
                 <div class="row">
-                    <div class = "col-3">
+                    <div class = "col-3 col-3 d-flex justify-content-center align-items-center">
                         <img style=" border: none; width: 150px; height: 150px" class="img-thumbnail rounded-circle" src="${app.imageurl}" alt="" onerror="this.src='../images/Help.png'">
                     </div>
                     <div  class = "col-6">
@@ -45,6 +48,7 @@ function generateAppHTML(app) {
                         <p>${app.description}</p>
                         <p>${app.companyname}</p>
                         <p><b>${app.price}$</b></p>
+                        <p>posted at: ${date}</p>
                     </div>
                     <div class = "col-3 d-flex justify-content-center align-items-center">
                         <div>
@@ -87,6 +91,9 @@ window.submitFormAddApp = async (event) => {
     event.preventDefault();
     let forms = [...document.querySelectorAll('.form-control')];
     let app = getAppFromForm();
+    if(app.price === ''){
+        app.price = 0;
+    }
 
     if (!forms.every(form => !form.classList.contains('is-invalid'))) {
         event.stopPropagation();
